@@ -1,2 +1,5 @@
-.vagrant
-project
+*
+!*.sh
+!*.txt
+!.gitignore
+!Vagrantfile
