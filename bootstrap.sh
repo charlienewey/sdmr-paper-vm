@@ -5,14 +5,28 @@ PPA_REPOSITORIES=(
 )
 
 PKG_DEPENDENCIES=(
-    "python-setuptools"
-    "python-dev"
     "build-essential"
-    "git"
     "g++"
     "gfortran"
-    "libopenblas-dev"
+    "git"
+    "libfreetype6-dev"
+    "libjpeg-dev"
     "liblapack-dev"
+    "libopenblas-dev"
+    "libpng12-0"
+    "libpng12-dev"
+    "pyqt5-dev-tools"
+    "python-cairo"
+    "python-cairo-dev"
+    "python-dev"
+    "python-gobject-2"
+    "python-gtk2"
+    "python-matplotlib"
+    "python-numpy"
+    "python-scipy"
+    "python-setuptools"
+    "python-skimage"
+    "python-sklearn"
 )
 
 # Enable multiverse.
@@ -43,7 +57,9 @@ apt-get install -y ${PKG_DEPENDENCIES[@]}
 
 # Install required python packages.
 easy_install pip
-pip install -r /vagrant/requirements.txt
+for package in $(cat /vagrant/requirements.txt); do
+    pip install $package
+done
 
 # Fix for matplotlib bug #3029.
 # See: https://github.com/matplotlib/matplotlib/issues/3029
