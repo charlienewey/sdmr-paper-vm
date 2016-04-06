@@ -1,4 +1,4 @@
-mahotas
 numpy
-scikit-learn
 scipy
+scikit-learn
+mahotas
