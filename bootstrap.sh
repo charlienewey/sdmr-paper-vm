@@ -32,6 +32,15 @@ done
 apt-get update
 apt-get install -y ${PKG_DEPENDENCIES[@]}
 
+# Create a temporary 2Gb swap file so that we don't exhaust the virtual
+# machine's memory when compiling scipy.
+# Note: Not really necessary if the VM has >=2Gb RAM
+#if [ ! -f "/tmp/tmp_swap" ]; then
+#    dd if=/dev/zero of=/tmp/tmp_swap bs=1024 count=2097152
+#    mkswap /tmp/tmp_swap
+#    swapon /tmp/tmp_swap
+#fi
+
 # Install required python packages.
 easy_install pip
 pip install -r /vagrant/requirements.txt
@@ -42,22 +51,17 @@ if [ ! -f "/usr/include/freetype2/ft2build.h" ]; then
     ln -s /usr/include/freetype2/ft2build.h /usr/include/
 fi
 
-# Create a temporary 2Gb swap file so that we don't exhaust the virtual
-# machine's memory when compiling scipy.
-if [ ! -f "/tmp/tmp_swap" ]; then
-    dd if=/dev/zero of=/tmp/tmp_swap bs=1024 count=2097152
-    mkswap /tmp/tmp_swap
-    swapon /tmp/tmp_swap
-fi
-
 # Install OpenCV
-if [ ! -d "/usr/share/opencv" ]; then
+latest_opencv="$(wget -q -O - http://sourceforge.net/projects/opencvlibrary/files/opencv-unix | egrep -m1 -o '\"[0-9](\.[0-9]+)+(-[-a-zA-Z0-9]+)?' | cut -c2-)"
+opencv=$(python -c 'exec("ex = \"not installed\";\ntry: import cv2; ex = cv2.__version__\nexcept: pass;\nprint(ex)")')
+if [ $opencv != "not installed" -a $opencv == $latest_opencv ]; then
+    echo "Latest OpenCV installed (version $opencv)... skipping!"
+else
+    echo "OpenCV outdated/not installed ($opencv)... installing!"
     pushd /tmp
         git clone https://github.com/jayrambhia/Install-OpenCV.git
         pushd Install-OpenCV/Ubuntu/
             ./opencv_latest.sh
         popd
     popd
-else
-    echo "OpenCV seems to already be installed, skipping..."
 fi
