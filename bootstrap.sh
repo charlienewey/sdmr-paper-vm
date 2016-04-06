@@ -15,7 +15,6 @@ PKG_DEPENDENCIES=(
     "libopenblas-dev"
     "libpng12-0"
     "libpng12-dev"
-    "pyqt5-dev-tools"
     "python-cairo"
     "python-cairo-dev"
     "python-dev"
@@ -67,17 +66,24 @@ if [ ! -f "/usr/include/freetype2/ft2build.h" ]; then
     ln -s /usr/include/freetype2/ft2build.h /usr/include/
 fi
 
-# Install OpenCV
-latest_opencv="$(wget -q -O - http://sourceforge.net/projects/opencvlibrary/files/opencv-unix | egrep -m1 -o '\"[0-9](\.[0-9]+)+(-[-a-zA-Z0-9]+)?' | cut -c2-)"
-opencv=$(python -c 'exec("ex = \"not installed\";\ntry: import cv2; ex = cv2.__version__\nexcept: pass;\nprint(ex)")')
-if [ $opencv != "not installed" -a $opencv == $latest_opencv ]; then
-    echo "Latest OpenCV installed (version $opencv)... skipping!"
-else
-    echo "OpenCV outdated/not installed ($opencv)... installing!"
+# Install OpCV
+function install_opencv() {
     pushd /tmp
         git clone https://github.com/jayrambhia/Install-OpenCV.git
         pushd Install-OpenCV/Ubuntu/
             ./opencv_latest.sh
         popd
     popd
+}
+
+latest_opencv="$(wget -q -O - http://sourceforge.net/projects/opencvlibrary/files/opencv-unix | egrep -m1 -o '\"[0-9](\.[0-9]+)+(-[-a-zA-Z0-9]+)?' | cut -c2-)"
+opencv=$(python -c 'exec("ex = \"not installed\";\ntry: import cv2; ex = cv2.__version__\nexcept: pass;\nprint(ex)")')
+if [ $opencv = $latest_opencv ]; then
+    echo "Latest OpenCV installed (version $opencv)... skipping!"
+elif [ $opencv = "not installed" ]; then
+    echo "OpenCV not installed... installing!"
+    install_opencv
+else
+    echo "OpenCV outdated... upgrading! ($opencv ==> $latest_opencv)"
+    install_opencv
 fi
