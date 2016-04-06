@@ -8,6 +8,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Every Vagrant virtual environment requires a box to build off of.
   config.vm.box = "ubuntu/trusty64"
   config.vm.hostname = "penumbra-opencv"
+  config.vm.define :opencv
 
   # Port forwarding
   # config.vm.network "forwarded_port", guest: 80, host: 8080
