@@ -69,6 +69,7 @@ fi
 # Install OpCV
 function install_opencv() {
     pushd /tmp
+        rm -rf Install-OpenCV
         git clone https://github.com/jayrambhia/Install-OpenCV.git
         pushd Install-OpenCV/Ubuntu/
             ./opencv_latest.sh
