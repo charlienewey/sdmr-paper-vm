@@ -1,18 +1,18 @@
 #!/bin/bash
 
 PPA_REPOSITORIES=(
-    'ppa:jon-severinsson/ffmpeg'
+    "ppa:mc3man/trusty-media"
 )
 
 PKG_DEPENDENCIES=(
-    'python-setuptools'
-    'python-dev'
-    'build-essential'
-    'git'
-    'g++'
-    'gfortran'
-    'libopenblas-dev'
-    'liblapack-dev'
+    "python-setuptools"
+    "python-dev"
+    "build-essential"
+    "git"
+    "g++"
+    "gfortran"
+    "libopenblas-dev"
+    "liblapack-dev"
 )
 
 # Enable multiverse.
