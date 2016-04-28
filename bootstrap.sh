@@ -20,12 +20,7 @@ PKG_DEPENDENCIES=(
     "python-dev"
     "python-gobject-2"
     "python-gtk2"
-    "python-matplotlib"
-    "python-numpy"
-    "python-scipy"
     "python-setuptools"
-    "python-skimage"
-    "python-sklearn"
 )
 
 # Enable multiverse.
@@ -54,7 +49,7 @@ apt-get install -y ${PKG_DEPENDENCIES[@]}
 #    swapon /tmp/tmp_swap
 #fi
 
-# Install required python packages.
+# Install required Python packages.
 easy_install pip
 for package in $(cat /vagrant/requirements.txt); do
     pip install $package
@@ -66,7 +61,7 @@ if [ ! -f "/usr/include/freetype2/ft2build.h" ]; then
     ln -s /usr/include/freetype2/ft2build.h /usr/include/
 fi
 
-# Install OpCV
+# Install OpenCV
 function install_opencv() {
     pushd /tmp
         rm -rf Install-OpenCV

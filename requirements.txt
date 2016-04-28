@@ -1,0 +1,7 @@
+matplotlib
+numpy
+pip
+scikit-image
+scikit-learn
+scipy
+setuptools
