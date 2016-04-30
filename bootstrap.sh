@@ -21,6 +21,7 @@ PKG_DEPENDENCIES=(
     "python-gobject-2"
     "python-gtk2"
     "python-setuptools"
+    "python-matplotlib"
 )
 
 # Enable multiverse.
@@ -52,7 +53,7 @@ apt-get install -y ${PKG_DEPENDENCIES[@]}
 # Install required Python packages.
 easy_install pip
 for package in $(cat /vagrant/requirements.txt); do
-    pip install $package
+    pip install -U $package
 done
 
 # Fix for matplotlib bug #3029.

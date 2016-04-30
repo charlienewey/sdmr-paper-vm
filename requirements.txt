@@ -1,7 +1,8 @@
-matplotlib
-numpy
 pip
+setuptools
+dill
+numpy
+scipy
 scikit-image
 scikit-learn
-scipy
-setuptools
+matplotlib
