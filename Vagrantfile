@@ -10,8 +10,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.hostname = "penumbra-opencv"
   config.vm.define :opencv
 
-  # Port forwarding
-  # config.vm.network "forwarded_port", guest: 80, host: 8080
+  # Port forwarding for Jupyter
+  config.vm.network "forwarded_port", guest: 8888, host: 8888
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.

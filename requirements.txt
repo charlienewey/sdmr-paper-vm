@@ -1,10 +1,9 @@
 pip
 setuptools
-dill
+jupyter
 numpy
 scipy
 scikit-image
 scikit-learn
 matplotlib
 mahotas
-tqdm
